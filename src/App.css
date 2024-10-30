@@ -1,0 +1,23 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@100..900&family=Orbit&display=swap');
+
+/* normalize */
+html {
+  /* 기준점 : 10px */
+  font-size: 0.625em;
+  text-decoration: none;
+  
+}
+
+* {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Hind Madurai", sans-serif;
+}
+
+
+
+/* 올림픽색상 : Blue(#0081C8) */
+
+
