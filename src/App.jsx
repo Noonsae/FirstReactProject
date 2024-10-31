@@ -31,16 +31,24 @@ const App = () => {
     };
 
     // some ?
-    for (let i = 0; i < countryList.length; i++) {
-      if (countryList[i].countryName.includes(countryName)) {
-        alert(
-          "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
-        );
-        return;
-      }
-    }
+    // for (let i = 0; i < countryList.length; i++) {
+    //   if (countryList[i].countryName.includes(countryName)) {
+    //     alert(
+    //       "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
+    //     );
+    //     return;
+    //   }
+    // }
+
+    if (countryList.some(country => country.countryName.includes(countryName))) {
+      alert(
+        "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
+      );
+      return;
+    }    
 
     setCountryList([...countryList, newCountry]);
+    alert("입력하신 국가의 메달 정보가 등록되었습니다.");
     setCountryName("");
     setGoldMedal("");
     setSilverMedal("");
@@ -48,37 +56,47 @@ const App = () => {
 
     // console.log(countryList);
   };
-
+  
   //  3. 삭제 버튼을 눌렀을 때 테이블에 데이터 삭제하기
   const handleDeleteTable = (selectCountryName) => {
     const filteringCountryList = countryList.filter(
       (list) => list.countryName !== selectCountryName
     );
+    console.log(filteringCountryList);
     setCountryList(filteringCountryList);
+    alert("선택한 국가의 정보가 삭제되었습니다.")
   };
 
   //  4. 업데이트 버튼을 눌렀을 때 테이블에 데이터 업데이트하기
   const handleUpdateTable = () => {
-    // → 제출된 나라이름이 있으면,
-    //   그 객체(컨트리리스트)안에 있는 다른 value(금은동메달)을 변경
 
-    const updateList = countryList.map((list) => {
+    const countryToUpdate = countryList.find(list => list.countryName === countryName);
+
+    if (countryToUpdate){
+      alert("입력하신 국가의 정보가 업데이트 되었습니다.")
       const newList = { countryName, goldMedal, silverMedal, bronzeMedal };
-      if (list.countryName === countryName){
-        alert("입력하신 국가의 정보가 업데이트 되었습니다.")
-        return newList;
-      } else {
-        alert("입력하신 국가는 등록되어있지 않습니다. 정보 추가를 원한다면 추가하기 버튼을 눌러주세요.")
-        return list;
-      }
-    });
 
+      const updateList = countryList.map((list) =>
+        list.countryName === countryName ? newList : list
+      );
+      setCountryList(updateList);
+    } else {
+      alert("입력하신 국가는 등록되어 있지 않습니다. 정보 추가를 원한다면 추가하기 버튼을 눌러주세요.");
+    }
     setCountryList(updateList);
     setCountryName("");
     setGoldMedal("");
     setSilverMedal("");
     setBronzeMedal("");
   };
+
+  //  5. 정렬하기
+  // countryList.sort((a, b) => b.goldMedal - a.goldMedal);
+
+  const getTotalMedal = (list) => list.goldMedal+list.silverMedal+list.bronzeMedal;
+  countryList.sort((a, b) => getTotalMedal(b) - getTotalMedal(a));
+  
+
 
   return (
     // Rendering되는 UI (html)
