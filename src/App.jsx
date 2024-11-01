@@ -216,7 +216,7 @@ const App = () => {
                   <td>{item.silverMedal}</td>
                   <td>{item.bronzeMedal}</td>
                   <td>
-                    {Number(item.goldMedal) +
+                    { Number(item.goldMedal) +
                       Number(item.silverMedal) +
                       Number(item.bronzeMedal)}
                   </td>
