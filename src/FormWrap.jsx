@@ -1,6 +1,6 @@
 import React from "react";
 
-const Form = ({
+const FormWarp = ({
   handleSubmit,
   countryName,
   onChangeCountryName,
@@ -79,4 +79,4 @@ const Form = ({
   );
 };
 
-export default Form;
+export default FormWarp;

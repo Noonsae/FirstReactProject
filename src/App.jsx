@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import MedalList from "./MedalList";
+import FormWarp from "./FormWrap";
 
 const App = () => {
   // JS코드 작성 (함수, 변수, 등등)
@@ -81,7 +82,6 @@ const App = () => {
         "입력하신 국가는 등록되어 있지 않습니다. 정보 추가를 원한다면 추가하기 버튼을 눌러주세요."
       );
     }
-
     setCountryName("");
     setGoldMedal("");
     setSilverMedal("");
@@ -106,13 +106,24 @@ const App = () => {
 
   return (
     // Rendering되는 UI (html)
-
     <div className="wrap">
+      
       {/* title */}
       <h1 className="title">2024 파리 올림픽</h1>
 
-      {/* Form */}
-      <Form/>
+      {/* FormWarp */}
+      <FormWarp
+        handleSubmit={handleSubmit}
+        countryName={countryName}
+        onChangeCountryName={onChangeCountryName}
+        goldMedal={goldMedal}
+        onChangeGoldMedal={onChangeGoldMedal}
+        silverMedal={silverMedal}
+        onChangeSilverMedal={onChangeSilverMedal}
+        bronzeMedal={bronzeMedal}
+        onChangeBronzeMedal={onChangeBronzeMedal}
+        handleUpdateTable={handleUpdateTable}
+      />
 
       {/* 구분선 */}
       <hr />
