@@ -10,13 +10,16 @@ const App = () => {
   const [silverMedal, setSilverMedal] = useState("");
   const [bronzeMedal, setBronzeMedal] = useState("");
   const [countryList, setCountryList] = useState([]);
+  const [onChangeSort, setOnChangeSort] = useState("goldMedal");
 
   // event
   //  1. input에 입력된 value값 받아오기
+  //  함수처리로 가독성 높이기
   const onChangeCountryName = (e) => setCountryName(e.target.value);
   const onChangeGoldMedal = (e) => setGoldMedal(e.target.value);
   const onChangeSilverMedal = (e) => setSilverMedal(e.target.value);
   const onChangeBronzeMedal = (e) => setBronzeMedal(e.target.value);
+  const handleSortChange = (e) => setOnChangeSort(e.target.value);
 
   //  2. 추가하기 버튼을 눌렀을 때 테이블에 데이터 추가
   const handleSubmit = (e) => {
@@ -29,16 +32,6 @@ const App = () => {
       bronzeMedal,
     };
 
-    // some ?
-    for (let i = 0; i < countryList.length; i++) {
-      if (countryList[i].countryName.includes(countryName)) {
-        alert(
-          "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
-        );
-        return;
-      }
-    }
-
     if (
       countryList.some((country) => country.countryName.includes(countryName))
     ) {
@@ -48,8 +41,8 @@ const App = () => {
       return;
     }
 
-    setCountryList([...countryList, newCountry]);
     alert("입력하신 국가의 메달 정보가 등록되었습니다.");
+    setCountryList([...countryList, newCountry]);
     setCountryName("");
     setGoldMedal("");
     setSilverMedal("");
@@ -87,7 +80,7 @@ const App = () => {
         "입력하신 국가는 등록되어 있지 않습니다. 정보 추가를 원한다면 추가하기 버튼을 눌러주세요."
       );
     }
-    setCountryList(updateList);
+
     setCountryName("");
     setGoldMedal("");
     setSilverMedal("");
@@ -95,16 +88,19 @@ const App = () => {
   };
 
   //  5. 정렬하기
-  countryList.sort((a, b) => b.goldMedal - a.goldMedal);
 
-  const sortedGoldMedal = countryList.sort((a, b) => {
-    b.goldMedal - a.goldMedal;
-  });
+  const sortedCountryList = [...countryList];
 
-  const getTotalMedal = (list) =>
-    list.goldMedal + list.silverMedal + list.bronzeMedal;
-  const sortedTotalMedal = countryList.sort((a, b) => {
-    getTotalMedal(b) - getTotalMedal(a);
+  sortedCountryList.sort((a, b) => {
+    if (onChangeSort === "goldMedal") {
+      return b.goldMedal - a.goldMedal;
+    } else if (onChangeSort === "totalMedals") {
+      const getTotalMedal = (list) =>
+        Number(list.goldMedal) +
+        Number(list.silverMedal) +
+        Number(list.bronzeMedal);
+      return getTotalMedal(b) - getTotalMedal(a);
+    }
   });
 
   return (
@@ -187,7 +183,11 @@ const App = () => {
         <h3>국가별 올핌릭 메달 정보</h3>
 
         <div className="sort-btn-wrap">
-          <select className="sort">
+          <select
+            className="sort"
+            value={onChangeSort}
+            onChange={handleSortChange}
+          >
             <option value="goldMedal">금메달 순으로 정렬하기</option>
             <option value="totalMedals">메달의 총합 순으로 정렬하기</option>
           </select>
@@ -209,7 +209,7 @@ const App = () => {
 
             {/* tbody에 정보를 추가, 삭제 */}
             <tbody>
-              {countryList.map((item) => (
+              {sortedCountryList.map((item) => (
                 <tr>
                   <td>{item.countryName}</td>
                   <td>{item.goldMedal}</td>

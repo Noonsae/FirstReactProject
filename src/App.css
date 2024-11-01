@@ -142,11 +142,9 @@ select {
   text-align: center;
 }
 select:focus {
-  border-color: #d02e46;
+  border-color: #df3b54;
   outline: none;
 }
-
-
 
 /* table */
 .table-area {
@@ -169,10 +167,10 @@ thead, tbody, tr {
 
 th, td {
   display: inline-block;
-  width: 16.5%; height: 50px;
+  width: 16.5%; height: 60px;
   
-  line-height: 50px;
-  font-size: 1.6em;
+  line-height: 60px;
+  font-size: 1.6em;  
 }
 
 th {
@@ -189,7 +187,7 @@ td {
   display: block;
   width: 60px;  height: 30px;
 
-  margin: 10px auto;  
+  margin: 15px auto;  
   background-color: #e91e63;
 
   border: none;
