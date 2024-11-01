@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import MedalList from "./MedalList";
-import FormWarp from "./FormWrap";
+import FormWrap from "./FormWrap";
 
 const App = () => {
   // JS코드 작성 (함수, 변수, 등등)
