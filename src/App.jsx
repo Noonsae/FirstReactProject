@@ -12,7 +12,6 @@ const App = () => {
   const [countryList, setCountryList] = useState([]);
 
   // event
-
   //  1. input에 입력된 value값 받아오기
   const onChangeCountryName = (e) => setCountryName(e.target.value);
   const onChangeGoldMedal = (e) => setGoldMedal(e.target.value);
@@ -31,21 +30,23 @@ const App = () => {
     };
 
     // some ?
-    // for (let i = 0; i < countryList.length; i++) {
-    //   if (countryList[i].countryName.includes(countryName)) {
-    //     alert(
-    //       "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
-    //     );
-    //     return;
-    //   }
-    // }
+    for (let i = 0; i < countryList.length; i++) {
+      if (countryList[i].countryName.includes(countryName)) {
+        alert(
+          "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
+        );
+        return;
+      }
+    }
 
-    if (countryList.some(country => country.countryName.includes(countryName))) {
+    if (
+      countryList.some((country) => country.countryName.includes(countryName))
+    ) {
       alert(
         "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
       );
       return;
-    }    
+    }
 
     setCountryList([...countryList, newCountry]);
     alert("입력하신 국가의 메달 정보가 등록되었습니다.");
@@ -56,7 +57,7 @@ const App = () => {
 
     // console.log(countryList);
   };
-  
+
   //  3. 삭제 버튼을 눌렀을 때 테이블에 데이터 삭제하기
   const handleDeleteTable = (selectCountryName) => {
     const filteringCountryList = countryList.filter(
@@ -64,16 +65,17 @@ const App = () => {
     );
     console.log(filteringCountryList);
     setCountryList(filteringCountryList);
-    alert("선택한 국가의 정보가 삭제되었습니다.")
+    alert("선택한 국가의 정보가 삭제되었습니다.");
   };
 
   //  4. 업데이트 버튼을 눌렀을 때 테이블에 데이터 업데이트하기
   const handleUpdateTable = () => {
+    const countryToUpdate = countryList.find(
+      (list) => list.countryName === countryName
+    );
 
-    const countryToUpdate = countryList.find(list => list.countryName === countryName);
-
-    if (countryToUpdate){
-      alert("입력하신 국가의 정보가 업데이트 되었습니다.")
+    if (countryToUpdate) {
+      alert("입력하신 국가의 정보가 업데이트 되었습니다.");
       const newList = { countryName, goldMedal, silverMedal, bronzeMedal };
 
       const updateList = countryList.map((list) =>
@@ -81,7 +83,9 @@ const App = () => {
       );
       setCountryList(updateList);
     } else {
-      alert("입력하신 국가는 등록되어 있지 않습니다. 정보 추가를 원한다면 추가하기 버튼을 눌러주세요.");
+      alert(
+        "입력하신 국가는 등록되어 있지 않습니다. 정보 추가를 원한다면 추가하기 버튼을 눌러주세요."
+      );
     }
     setCountryList(updateList);
     setCountryName("");
@@ -91,12 +95,17 @@ const App = () => {
   };
 
   //  5. 정렬하기
-  // countryList.sort((a, b) => b.goldMedal - a.goldMedal);
+  countryList.sort((a, b) => b.goldMedal - a.goldMedal);
 
-  const getTotalMedal = (list) => list.goldMedal+list.silverMedal+list.bronzeMedal;
-  countryList.sort((a, b) => getTotalMedal(b) - getTotalMedal(a));
-  
+  const sortedGoldMedal = countryList.sort((a, b) => {
+    b.goldMedal - a.goldMedal;
+  });
 
+  const getTotalMedal = (list) =>
+    list.goldMedal + list.silverMedal + list.bronzeMedal;
+  const sortedTotalMedal = countryList.sort((a, b) => {
+    getTotalMedal(b) - getTotalMedal(a);
+  });
 
   return (
     // Rendering되는 UI (html)
@@ -171,48 +180,60 @@ const App = () => {
       </form>
 
       {/* 구분선 */}
-      <hr></hr>
+      <hr />
 
       <div className="table-wrap">
-        <table>
-          {/* table의 제목 */}
-          <thead>
-            <tr>
-              <th>국가명</th>
-              <th>금메달</th>
-              <th>은메달</th>
-              <th>동메달</th>
-              <th>총합</th>
-              <th>삭제하기</th>
-            </tr>
-          </thead>
+        {/* title */}
+        <h3>국가별 올핌릭 메달 정보</h3>
 
-          {/* tbody에 정보를 추가, 삭제 */}
-          <tbody>
-            {countryList.map((item) => (
+        <div className="sort-btn-wrap">
+          <select className="sort">
+            <option value="goldMedal">금메달 순으로 정렬하기</option>
+            <option value="totalMedals">메달의 총합 순으로 정렬하기</option>
+          </select>
+        </div>
+
+        <div className="table-area">
+          <table>
+            {/* table의 제목 */}
+            <thead>
               <tr>
-                <td>{item.countryName}</td>
-                <td>{item.goldMedal}</td>
-                <td>{item.silverMedal}</td>
-                <td>{item.bronzeMedal}</td>
-                <td>
-                  {Number(item.goldMedal) +
-                    Number(item.silverMedal) +
-                    Number(item.bronzeMedal)}
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    className="remove-data-btn"
-                    onClick={() => handleDeleteTable(item.countryName)}
-                  >
-                    삭제
-                  </button>
-                </td>
+                <th>국가명</th>
+                <th>금메달</th>
+                <th>은메달</th>
+                <th>동메달</th>
+                <th>총합</th>
+                <th>삭제하기</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            {/* tbody에 정보를 추가, 삭제 */}
+            <tbody>
+              {countryList.map((item) => (
+                <tr>
+                  <td>{item.countryName}</td>
+                  <td>{item.goldMedal}</td>
+                  <td>{item.silverMedal}</td>
+                  <td>{item.bronzeMedal}</td>
+                  <td>
+                    {Number(item.goldMedal) +
+                      Number(item.silverMedal) +
+                      Number(item.bronzeMedal)}
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="remove-data-btn"
+                      onClick={() => handleDeleteTable(item.countryName)}
+                    >
+                      삭제
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
