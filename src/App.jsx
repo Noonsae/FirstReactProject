@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import MedalList from "./MedalList";
 
 const App = () => {
   // JS코드 작성 (함수, 변수, 등등)
@@ -33,7 +34,7 @@ const App = () => {
     };
 
     if (
-      countryList.some((country) => country.countryName.includes(countryName))
+      countryList.some(item => item.countryName === countryName)
     ) {
       alert(
         "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
@@ -110,131 +111,19 @@ const App = () => {
       {/* title */}
       <h1 className="title">2024 파리 올림픽</h1>
 
-      {/* 데이터를 입력하는 영역 (input, btn) */}
-      <form className="input-wrap" onSubmit={handleSubmit}>
-        {/* input에 입력되는 값을 props로 값을 저장해서 table에 넘겨줌 */}
-        <fieldset className="input-area">
-          <label htmlFor="">🚩국가명</label>
-          <input
-            type="text"
-            value={countryName}
-            placeholder="국가명을 입력해주세요."
-            onChange={onChangeCountryName}
-            required
-          />
-        </fieldset>
-        <fieldset className="input-area">
-          <label htmlFor="">🥇금메달</label>
-          <input
-            type="number"
-            min={0}
-            max={99}
-            value={goldMedal}
-            onChange={onChangeGoldMedal}
-            placeholder={`금메달의 수량을 입력해주세요.`}
-            required
-          />
-        </fieldset>
-        <fieldset className="input-area">
-          <label htmlFor="">🥈은메달</label>
-          <input
-            type="number"
-            min={0}
-            max={99}
-            value={silverMedal}
-            onChange={onChangeSilverMedal}
-            placeholder={`은메달의 수량을 입력해주세요.`}
-            required
-          />
-        </fieldset>
-        <fieldset className="input-area">
-          <label htmlFor="">🥉동메달</label>
-          <input
-            type="number"
-            min={0}
-            max={99}
-            value={bronzeMedal}
-            onChange={onChangeBronzeMedal}
-            placeholder={`동메달의 수량을 입력해주세요.`}
-            required
-          />
-        </fieldset>
-
-        {/* add-country-btn을 클릭하면 table에 input 값 추가 */}
-        <button type="submit" className="add-country-btn">
-          추가하기
-        </button>
-
-        {/* table-update-btn을 클릭하면 table에 input 값을 변경 */}
-        <button
-          type="button"
-          className="table-update-btn"
-          onClick={handleUpdateTable}
-        >
-          업데이트
-        </button>
-      </form>
+      {/* Form */}
+      <Form/>
 
       {/* 구분선 */}
       <hr />
 
-      <div className="table-wrap">
-        {/* title */}
-        <h3>국가별 올핌릭 메달 정보</h3>
-
-        <div className="sort-btn-wrap">
-          <select
-            className="sort"
-            value={onChangeSort}
-            onChange={handleSortChange}
-          >
-            <option value="goldMedal">금메달 순으로 정렬하기</option>
-            <option value="totalMedals">메달의 총합 순으로 정렬하기</option>
-          </select>
-        </div>
-
-        <div className="table-area">
-          <table>
-            {/* table의 제목 */}
-            <thead>
-              <tr>
-                <th>국가명</th>
-                <th>금메달</th>
-                <th>은메달</th>
-                <th>동메달</th>
-                <th>총합</th>
-                <th>삭제하기</th>
-              </tr>
-            </thead>
-
-            {/* tbody에 정보를 추가, 삭제 */}
-            <tbody>
-              {sortedCountryList.map((item) => (
-                <tr>
-                  <td>{item.countryName}</td>
-                  <td>{item.goldMedal}</td>
-                  <td>{item.silverMedal}</td>
-                  <td>{item.bronzeMedal}</td>
-                  <td>
-                    { Number(item.goldMedal) +
-                      Number(item.silverMedal) +
-                      Number(item.bronzeMedal)}
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      className="remove-data-btn"
-                      onClick={() => handleDeleteTable(item.countryName)}
-                    >
-                      삭제
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* MedalList */}
+      <MedalList
+        onChangeSort={onChangeSort}
+        handleSortChange={handleSortChange}
+        sortedCountryList={sortedCountryList}
+        handleDeleteTable={handleDeleteTable}
+      />
     </div>
   );
 };
