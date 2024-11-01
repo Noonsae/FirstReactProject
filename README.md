@@ -1,8 +1,45 @@
-# React + Vite
+# 🥇Olympic Medal Tracker 만들기
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+### 🚩 프로젝트 목표
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 리액트 컴포넌트와 훅(useState)을 다룰 수 있어요.
+- 리액트에서 이벤트를 관리할 수 있어요.
+- 리액트의 state, props 를 확실히 이해하고 사용할 수 있어요.
+<hr>
+
+### ⚙ 주요 기능
+
+- 제출 폼 UI 구현 : 나라 이름과 금,은,동 메달 수를 입력할 수 있는 폼을 만들어주세요.
+- 메달 집계 CRUD 기능 : 폼에 입력된 데이터를 사용하여 국가별 메달 집계를 관리합니다.
+     - create 시 동일한 국가가 이미 리스트에 있을 경우, 사용자에게 경고 메시지를 표시하여 중복된 데이터를 방지합니다.
+     - update 시 존재하는 국가에 데이터가 갱신될 경우 사용자에게 알림을 표시합니다.
+     - update 시 존재하지 않는 국가에 대한 데이터를 수정하려고 할 때, 사용자에게 알림을 표시합니다.
+     - delete 시 등록된 데이터를 삭제하고 사용자에게 알림을 표시합니다.
+
+- 메달 집계 정렬 : 리스트에 표시된 국가별 메달 집계를 정렬합니다.
+     - 정렬 선택창에서 금메달 순 또는 총 메달 순을 선택하여 정렬할 수 있습니다.
+
+- 레이아웃 설정 : 화면 전체의 레이아웃을 설정하여 정돈된 UI를 만듭니다.
+     - 최대한 깔끔한 디자인을 CSS로 이쁘게 꾸며보았습니다..
+
+- 컴포넌트 구조 : 기능별로 컴포넌트를 분리하여 코드의 가독성과 재사용성을 높입니다.
+<hr>
+
+### 📁 파일 구조
+#### 1) App.jsx
+> 프로젝트의 전반적인 기능이 작성된 파일입니다.
+- State : 프로젝트에서 사용한 hook 
+- Event : 프로젝트에서 사용한 envet
+    - onChange ~ : input에 입력된 value 
+    - handleSortChange : select창에 입력된 value 
+    - handleSubmit : 추가하기 버튼을 눌렀을 때 테이블에 데이터 추가
+    - handleDeleteTable : 삭제 버튼을 눌렀을 때 테이블에서 데이터 삭제
+    - handleUpdate : 업데이트 버튼을 눌렀을 때 테이블에 데이터 업데이트
+    - sort : 금메달 또는 총 메달 수량에 따라 테이블 데이터를 정렬
+- return(html) : 화면 전체의 레이아웃 <br>
+
+#### 2) FormWarp.jsx
+> 사용자가 사용하는 입력창과 사용자와 상호작용이 가능한 버튼이 구현된 파일입니다.
+#### 3) FormWarp.jsx
+> 사용자가 입력한 데이터를 읽어와 화면에 표시되는 table이 작성된 파일입니다.
