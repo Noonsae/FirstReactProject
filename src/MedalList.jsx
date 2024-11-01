@@ -39,7 +39,7 @@ const MedalList = ({
           {/* tbody에 정보를 추가, 삭제 */}
           <tbody>
             {sortedCountryList.map((item) => (
-              <tr>
+              <tr key={item.countryName}>
                 <td>{item.countryName}</td>
                 <td>{item.goldMedal}</td>
                 <td>{item.silverMedal}</td>
