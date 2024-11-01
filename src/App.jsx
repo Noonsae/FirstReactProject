@@ -106,8 +106,8 @@ const App = () => {
       {/* title */}
       <h1 className="title">2024 파리 올림픽</h1>
 
-      {/* FormWarp */}
-      <FormWarp
+      {/* FormWrap */}
+      <FormWrap
         handleSubmit={handleSubmit}
         countryName={countryName}
         onChangeCountryName={onChangeCountryName}
