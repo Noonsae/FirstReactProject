@@ -34,9 +34,7 @@ const App = () => {
       bronzeMedal,
     };
 
-    if (
-      countryList.some(item => item.countryName === countryName)
-    ) {
+    if (countryList.some((item) => item.countryName === countryName)) {
       alert(
         "입력하신 국가는 이미 등록된 국가입니다. 정보를 업데이트 하길 원하시면 업데이트 버튼을 눌러주세요."
       );
@@ -89,9 +87,7 @@ const App = () => {
   };
 
   //  5. 정렬하기
-
   const sortedCountryList = [...countryList];
-
   sortedCountryList.sort((a, b) => {
     if (onChangeSort === "goldMedal") {
       return b.goldMedal - a.goldMedal;
@@ -107,7 +103,6 @@ const App = () => {
   return (
     // Rendering되는 UI (html)
     <div className="wrap">
-      
       {/* title */}
       <h1 className="title">2024 파리 올림픽</h1>
 
